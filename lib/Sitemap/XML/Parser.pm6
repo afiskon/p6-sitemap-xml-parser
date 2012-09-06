@@ -111,7 +111,7 @@ my $sitemap = $parser.parse-url('http://example.ru/sitemap.xml');
 
 =head1 DESCRIPTION
 
-Module for parsing sitemap.xml files
+Module for parsing sitemap.xml files.
 
 =head1 METHODS
 
