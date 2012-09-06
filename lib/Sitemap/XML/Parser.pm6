@@ -8,9 +8,10 @@ class Sitemap::XML::Parser;
 
 has $!parser = XML::Parser::Tiny.new;
 has $!w3cdtf = DateTime::Format::W3CDTF.new;
+has $.lwp = LWP::Simple.new;
 
 method parse-url ( Str $url ) {
-    my $data = LWP::Simple.get($url).decode('UTF-8');
+    my $data = $.lwp.get($url).decode('UTF-8');
     return self.parse($data);
 }
 
@@ -45,7 +46,7 @@ method parse ( Str $data ) {
 
         @urls.push( $(%info) );
     }
-    return $( @urls );
+    return @urls;
 }
 
 method !check-loc ( %info is copy ) {
