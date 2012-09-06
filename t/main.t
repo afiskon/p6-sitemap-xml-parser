@@ -3,6 +3,20 @@ use lib 'lib';
 use Test;
 use Sitemap::XML::Parser;
 
+my $parser = Sitemap::XML::Parser.new;
+{ # parse-file() test
+    try {
+        chdir('t');
+        CATCH { return; }
+    }
+    my $rslt = $parser.parse-file('sitemap.xml');
+    ok( $rslt[0]{'loc'}.isa('URI') );
+    $rslt[0]{'loc'} = $rslt[0]{'loc'}.Str;
+    ok( $rslt[0]{'lastmod'}.isa('DateTime') );
+    $rslt[0]{'lastmod'} = $rslt[0]{'lastmod'}.Str;
+    ok($rslt eqv [{loc=>'http://example.com/',lastmod=>'2005-01-01T00:00:00Z',changefreq=>'monthly',priority=>0.8}]);
+}
+
 my @invalid = (
     'trash',
     '<bebebe />',
@@ -112,7 +126,6 @@ for @changefreq_list -> $changefreq {
     ];
 }
 
-my $parser = Sitemap::XML::Parser.new;
 for @invalid -> $sitemap {
     dies_ok({ $parser.parse($sitemap) });
 }

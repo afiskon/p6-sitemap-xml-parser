@@ -10,13 +10,13 @@ has $!parser = XML::Parser::Tiny.new;
 has $!w3cdtf = DateTime::Format::W3CDTF.new;
 
 method parse-url ( Str $url ) {
-    my $data = LWP::Simple.get($url);
-    self.parse($data);
+    my $data = LWP::Simple.get($url).decode('UTF-8');
+    return self.parse($data);
 }
 
 method parse-file ( Str $fname ) {
     my $data = slurp($fname);
-    self.parse($data);
+    return self.parse($data);
 }
 
 method parse ( Str $data ) {
@@ -45,7 +45,7 @@ method parse ( Str $data ) {
 
         @urls.push( $(%info) );
     }
-    return @urls;
+    return $( @urls );
 }
 
 method !check-loc ( %info is copy ) {
