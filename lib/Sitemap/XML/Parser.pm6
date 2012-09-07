@@ -30,7 +30,7 @@ method parse ( Str $data ) {
 
         my %info;
         for @( %url{'data'} ) -> %item {
-            unless %item{'name'} eq any('loc', 'lastmod', 'changefreq', 'priority') {
+            unless %item{'name'} eq [|] qw/loc lastmod changefreq priority/ {
                 die "Unexpected tag '" ~ %item{'name'} ~ "' found";
             }
             unless @( %item{'data'} ).elems == 1 && %item{'data'}[0].isa('Str') {
@@ -68,7 +68,7 @@ method !check-lastmod ( %info is copy ) {
 method !check-changefreq ( %info ) {
     return %info unless any(%info.keys) eq 'changefreq';
 
-    unless %info{'changefreq'} eq any(qw/always hourly daily weekly monthly yearly never/) {
+    unless %info{'changefreq'} eq [|] qw/always hourly daily weekly monthly yearly never/ {
         die "Invalid tag value '" ~ %info{'changefreq'} ~ "' for 'changefreq'"
     }
     return %info;
