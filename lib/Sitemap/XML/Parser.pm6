@@ -33,7 +33,7 @@ method parse ( Str $data ) {
             unless %item{'name'} eq [|] qw/loc lastmod changefreq priority/ {
                 die "Unexpected tag '" ~ %item{'name'} ~ "' found";
             }
-            unless @( %item{'data'} ).elems == 1 && %item{'data'}[0].isa('Str') {
+            unless @( %item{'data'} ) == 1 && %item{'data'}[0].isa('Str') {
                 die "Invalid tag value for '" ~ %item{'name'} ~ "'";
             }
             %info{ %item{'name'} } = %item{'data'}[0];
