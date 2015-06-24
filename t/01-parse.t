@@ -115,7 +115,7 @@ for @changefreq_list -> $changefreq {
 my $parser = Sitemap::XML::Parser.new;
 
 for @invalid -> $sitemap {
-    dies_ok({ $parser.parse($sitemap) });
+    dies-ok({ $parser.parse($sitemap) });
 }
 
 for @valid_sitemaps Z @valid_results -> $sitemap, $struct {
