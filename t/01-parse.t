@@ -118,7 +118,7 @@ for @invalid -> $sitemap {
     dies_ok({ $parser.parse($sitemap) });
 }
 
-for @valid_sitemaps Z @valid_results -> $sitemap, $struct {
+for @valid_sitemaps Z @valid_results -> ($sitemap, $struct) {
     my $rslt = $parser.parse($sitemap);
 
     for $rslt.values -> $item is rw {
